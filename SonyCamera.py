@@ -104,18 +104,18 @@ class Camera:
 		result = self.send(params)
 		return result
 
-cam = Camera()
-print "starting shoot mode"
-print cam.startRecMode()
+# cam = Camera()
+# print "starting shoot mode"
+# print cam.startRecMode()
 
-#print cam.getAvailableApiList()
-#print "taking picture"
-#print cam.actTakePicture()
-#print cam.stopLiveView()
-#print cam.getEvent()
-#print cam.actZoom("in","start")
-cam.zoomInFull()
-print cam.getEvent()
+# #print cam.getAvailableApiList()
+# #print "taking picture"
+# #print cam.actTakePicture()
+# #print cam.stopLiveView()
+# #print cam.getEvent()
+# #print cam.actZoom("in","start")
+# cam.zoomInFull()
+# print cam.getEvent()
 # time.sleep(3)
 # print cam.getEvent()
 # print cam.actTakePicture()
