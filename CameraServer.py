@@ -10,15 +10,12 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 		print("GOT")
 		request_path = self.path.split("/")[1:]
 		
-		#print(self.headers['Origin'])
-		
 		# Aircraft and image system status
 		if request_path[0] == "status":
 			message = self.server.get_status()
 			
 			self.send_response(200)
 			self.send_header("Content-Type", "application/json")
-			#self.send_header("Access-Control-Allow-Origin", self.headers['Origin'])
 			self.end_headers()
 			self.wfile.write(json.dumps(message))
 			return
@@ -28,7 +25,6 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 			
 			self.send_response(200)
 			self.send_header("Content-Type", "text/plain")
-			#self.send_header("Access-Control-Allow-Origin", self.headers['Origin'])
 			self.end_headers()
 			self.wfile.write("OK")
 			return
@@ -39,7 +35,6 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 			
 			self.send_response(200)
 			self.send_header("Content-Type", "text/plain")
-			#self.send_header("Access-Control-Allow-Origin", self.headers['Origin'])
 			self.end_headers()
 			self.wfile.write("OK")
 			return
@@ -50,7 +45,16 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 			
 			self.send_response(200)
 			self.send_header("Content-Type", "text/plain")
-			#self.send_header("Access-Control-Allow-Origin", self.headers['Origin'])
+			self.end_headers()
+			self.wfile.write("OK")
+			return
+
+		if request_path[0] == "zoominfull":
+			self.server.zoom_in_full()
+			print("Zoom In Full!")
+			
+			self.send_response(200)
+			self.send_header("Content-Type", "text/plain")
 			self.end_headers()
 			self.wfile.write("OK")
 			return
@@ -61,7 +65,16 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 			
 			self.send_response(200)
 			self.send_header("Content-Type", "text/plain")
-			#self.send_header("Access-Control-Allow-Origin", self.headers['Origin'])
+			self.end_headers()
+			self.wfile.write("OK")
+			return
+
+		if request_path[0] == "zoomoutfull":
+			self.server.zoom_out_full()
+			print("Zoom Out Full!")
+			
+			self.send_response(200)
+			self.send_header("Content-Type", "text/plain")
 			self.end_headers()
 			self.wfile.write("OK")
 			return
@@ -71,8 +84,6 @@ class ImageServerRequestHandler(BaseHTTPRequestHandler):
 class ImageServer(HTTPServer):
 	
 	statusmsg = "Status unavailable"
-	# csvfile = ""
-	# zipfile = ""
 	finish_mission = False
 	status_lock = threading.Lock()
 
@@ -87,9 +98,6 @@ class ImageServer(HTTPServer):
 		self.status_lock.acquire()
 		retval = {}
 		retval['status'] = self.statusmsg
-		# retval['csvfile'] = self.csvfile
-		# retval['zipfile'] = self.zipfile
-		# retval['cam1'] = self.cam1.status()
 		self.status_lock.release()
 		return retval
 	
@@ -111,22 +119,20 @@ class ImageServer(HTTPServer):
 		self.cam.zoomIn()
 		self.status_lock.release()
 
+	def zoom_in_full(self):
+		self.status_lock.acquire()
+		self.cam.zoomInFull()
+		self.status_lock.release()
+
 	def zoom_out(self):
 		self.status_lock.acquire()
 		self.cam.zoomOut()
 		self.status_lock.release()
-		
-	# def set_csvfile(self, msg):
-	# 	self.status_lock.acquire()
-	# 	self.csvfile = msg
-	# 	self.status_lock.release()
-	# 	return
-		
-	# def set_zipfile(self, msg):
-	# 	self.status_lock.acquire()
-	# 	self.zipfile = "<a href=\"/agribotix/data/"+msg+"\">"+msg+"</a>"
-	# 	self.status_lock.release()
-	# 	return
+
+	def zoom_out_full(self):
+		self.status_lock.acquire()
+		self.cam.zoomOutFull()
+		self.status_lock.release()
 		
 	def finish(self):
 		self.finish_mission = True

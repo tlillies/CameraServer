@@ -37,9 +37,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/"><i class="fa fa-lg fa-plane"></i> System Status</a></li>
-            <li><a href="/data/"><i class="fa fa-lg fa-camera"></i> Image Data</a></li>
-            <li><a href="#"><i class="fa fa-lg fa-gear"></i> Settings</a></li>
+            <li class="active"><a href="index.html"><i class="fa fa-lg fa-plane"></i> System Status</a></li>
+            <li><a href="data"><i class="fa fa-lg fa-camera"></i> Image Data</a></li>
+            <li><a href=""><i class="fa fa-lg fa-gear"></i> Settings</a></li>
             <!--<li class="dropdown">
               <a href="http://getbootstrap.com/examples/sticky-footer-navbar/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -63,8 +63,8 @@
         <h1>AgriPhoto</h1>
       </div>-->
 
-<!--       	<h2>System Status</h2>
-		<p><strong>Status:</strong> <span id="statusmsg"></span></p> -->
+      	<h2>System Status</h2>
+		<p><strong>Status:</strong> <span id="statusmsg"></span></p>
 <!-- 		<p><strong>CSV Filename:</strong> <span id="csvfile"></span></p>
 		<p><strong>ZIP Filename:</strong> <span id="zipfile"></span></p> -->
 		
@@ -74,13 +74,26 @@
 		<p><strong>Pending Downloads:</strong> <span id="cam1_pending"></span></p>
 		<p><strong>Last Activity:</strong> <span id="cam1_lastact"></span></p> -->
 
+    <h2>Actions</h2>
+
     <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/picture')">Take Picture</button>
+
+    <p></p>
+    <h1></h1>
 
     <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/zoomin')">Zoom In</button>
 
-    <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/zoomout')">Zoom Out</button>
+    <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/zoomout')">
+    Zoom Out</button>
+
+    <p></p>
+
+    <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/zoominfull')">
+    Zoom In Full</button>
+
+    <button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/zoomoutfull')">
+    Zoom Out Full</button>
 		
-		<button type="button" class="btn btn-default" onClick="$.get('http://0.0.0.0:9000/finish')">Finish Mission</button>
 		
     </div>
 

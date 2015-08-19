@@ -3,6 +3,7 @@
 import sys
 import json
 import urllib2
+import urllib
 from pprint import pprint
 import collections
 import time
@@ -29,6 +30,18 @@ class Camera:
 		"""function to take picture."""
 		params = self.pack("actTakePicture")
 		result = self.send(params)
+		result = json.loads(result)
+		try:
+			URL = result['result']
+		except:
+			print "Couldn't take picture"
+			return None
+		f = urllib.urlopen(str(URL[0][0]))
+		image = f.read()
+		imageFile = open('web-ui/data/' + str(URL[0][0].split('/')[-1]), 'wb')
+		imageFile.write(image)
+		imageFile.close()
+		print URL[0][0]
 		return result
 
 	def startContShooting(self): ## UNTESTED
@@ -105,12 +118,12 @@ class Camera:
 		return result
 
 # cam = Camera()
-# print "starting shoot mode"
+# # print "starting shoot mode"
 # print cam.startRecMode()
 
-# #print cam.getAvailableApiList()
-# #print "taking picture"
-# #print cam.actTakePicture()
+# # #print cam.getAvailableApiList()
+# print "taking picture"
+# cam.actTakePicture()
 # #print cam.stopLiveView()
 # #print cam.getEvent()
 # #print cam.actZoom("in","start")
